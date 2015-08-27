@@ -68,7 +68,7 @@ class Stomp(object):
             pass
         self.connected = False
 
-    def send(self, conf=None):
+    def send(self, conf=None, receipt=True):
         """Send message to STOMP server
 
         You'll need to pass the body and any other headers your
@@ -84,18 +84,10 @@ class Stomp(object):
             ...                 'persistent': 'true'})
 
         """
-        self._send(conf,True)
-
-    def send_noreceipt(self,conf=None):
-        """Send message to STOMP server without receipt
-        """
-        self._send(conf,False)
-        
-    def _send(self,conf=None,receipt)
         headers = dict(conf)
         body = headers.pop("body", "")
         return self._send_command("SEND", headers, extra={"body": body},
-                                  want_receipt=reveipt)
+                                  want_receipt=receipt)
 
     def _build_frame(self, *args, **kwargs):
         self._connected_or_raise()
