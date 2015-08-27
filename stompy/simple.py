@@ -63,7 +63,7 @@ class Client(object):
         """
         return self.get(block=False)
 
-    def put(self, item, destination, persistent=True, conf=None):
+    def put(self, item, destination, persistent=True, conf=None,receipt=True):
         """Put an item into the queue.
 
         :param item: Body of the message.
@@ -78,7 +78,7 @@ class Client(object):
         conf = self._make_conf(conf, body=item, destination=destination,
                                persistent=persistent)
 
-        return self.stomp.send(conf)
+        return self.stomp.send(conf,receipt)
 
     def connect(self, username=None, password=None, clientid=None):
         """Connect to the broker.
