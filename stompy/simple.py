@@ -1,5 +1,8 @@
 from stompy.stomp import Stomp
-from Queue import Empty
+if sys.version_info[0] < 3:
+    from Queue import Queue
+else:
+    from queue import Queue
 from uuid import uuid4
 
 

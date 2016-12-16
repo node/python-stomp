@@ -6,7 +6,10 @@ import socket
 from stompy import frame
 from stompy.frame import Frame, IntermediateMessageQueue, \
         UnknownBrokerResponseError, BrokerErrorResponse
-from Queue import Empty as QueueEmpty
+if sys.version_info[0] < 3:
+    from Queue import Empty as QueueEmpty
+else:
+    from queue import Empty as QueueEmpty
 
 
 class WhenSettingUp(DingusTestCase(Frame)):

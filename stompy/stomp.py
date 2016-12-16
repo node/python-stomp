@@ -46,9 +46,9 @@ class Stomp(object):
         try:
             self.sock.connect((self.host, self.port))
             self.frame.connect(self.sock, username=username, password=password, clientid=clientid)
-        except socket.timeout, exc:
+        except socket.timeout as exc:
             raise self.ConnectionTimeoutError(*exc.args)
-        except socket.error, exc:
+        except socket.error as exc:
             raise self.ConnectionError(*exc.args)
         self.connected = True
 
@@ -63,7 +63,7 @@ class Stomp(object):
         try:
             self.sock.shutdown(0)
             self.sock.close()
-        except socket.error, exc:
+        except socket.error as exc:
             # likely wasn't connected
             pass
         self.connected = False

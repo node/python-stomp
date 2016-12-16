@@ -2,8 +2,12 @@ import socket
 import random
 from pprint import pformat
 from errno import EAGAIN, EWOULDBLOCK
-from Queue import Queue
-from Queue import Empty as QueueEmpty
+if sys.version_info[0] < 3:
+    from Queue import Queue
+    from Queue import Empty as QueueEmpty
+else:
+    from queue import Queue
+    from queue import Empty as QueueEmpty
 
 
 class UnknownBrokerResponseError(Exception):
@@ -268,7 +272,7 @@ class Frame(object):
                     partial = self.sock.recv(1)
                     if not partial or partial == '':
                         raise UnknownBrokerResponseError('empty reply')
-                except socket.error, exc:
+                except socket.error as exc:
                     if exc[0] == EAGAIN or exc[0] == EWOULDBLOCK:
                         if not buffer or buffer == '\n':
                             raise UnknownBrokerResponseError('empty reply')
